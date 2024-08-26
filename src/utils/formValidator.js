@@ -22,7 +22,15 @@ const createCollectionSchema = z
     name: z.string().trim().min(1, "Name is required"),
     description: z.string().trim().min(1, "Description is required"),
     category: z.string().trim().min(1, "Category is required"),
-    image: z.any().nullable().optional(),
+    image: z
+    .any()
+    .optional()
+    .refine((file) => !file || file instanceof File, {
+      message: "Invalid file input",
+    })
+    .refine((file) => !file || file.size <= 5 * 1024 * 1024, {
+      message: "Image must be less than 5MB",
+    }),
 
     // Custom String Fields
     custom_string1_state: z.boolean().default(false),

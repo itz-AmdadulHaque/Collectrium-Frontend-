@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { createCollectionSchema } from "../utils/formValidator";
-import { Button, FileInput, Label } from "flowbite-react";
+import { Button, FileInput } from "flowbite-react";
 
 const CreateCollection = () => {
   const {
@@ -105,9 +105,17 @@ const CreateCollection = () => {
         </div>
         <div>
           <div className="">
-            <label className="text-sm font-semibold">Upload Image (Optional) </label>
+            <label className="text-sm font-semibold">
+              Upload Image (Optional){" "}
+            </label>
           </div>
-          <FileInput id="file-upload" {...register("image")} onChange={(e)=> setValue("image", e.target.files[0])} />
+          <FileInput
+            id="file-upload"
+            onChange={(e) => setValue("image", e.target.files[0])}
+          />
+          {errors.image && (
+            <p className="text-red-500 text-sm">{errors.image.message}</p>
+          )}
         </div>
         <div>
           <label className="text-sm font-medium">Description</label>
