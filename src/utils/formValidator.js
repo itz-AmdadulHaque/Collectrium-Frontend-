@@ -6,7 +6,7 @@ const signUpSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(4, "Password must be at least 6 characters long"),
+    .min(4, "Password must be at least 4 characters long"),
 });
 
 const loginSchema = z.object({
@@ -14,7 +14,7 @@ const loginSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(4, "Password must be at least 6 characters long"),
+    .min(4, "Password must be at least 4 characters long"),
 });
 
 const createCollectionSchema = z
@@ -22,6 +22,7 @@ const createCollectionSchema = z
     name: z.string().trim().min(1, "Name is required"),
     description: z.string().trim().min(1, "Description is required"),
     category: z.string().trim().min(1, "Category is required"),
+    image: z.any().nullable().optional(),
 
     // Custom String Fields
     custom_string1_state: z.boolean().default(false),
@@ -82,6 +83,5 @@ const createCollectionSchema = z
   .refine((data) => !(data.custom_multi3_state && !data.custom_multi3_name), {
     message: "Custom fields must be filled",
     path: ["custom_multi3_name"],
-  })
-;
+  });
 export { signUpSchema, loginSchema, createCollectionSchema };
